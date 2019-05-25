@@ -1,0 +1,71 @@
+apiVersion: serving.knative.dev/v1beta1
+kind: Revision
+metadata:
+  namespace: ske-release
+  labels:
+    serving.knative.dev/route: details-v1
+    serving.knative.dev/configuration: details-v1
+    serving.knative.dev/configurationGeneration: '1'
+    serving.knative.dev/service: details-v1
+    cloud.googleapis.com/location: us-central1
+spec:
+  container:
+    image: gcr.io/ske-release/bookinfo-details-v1:latest
+    resources:
+      limits:
+        memory: 256Mi
+  timeoutSeconds: 300
+  containerConcurrency: 80
+---
+apiVersion: serving.knative.dev/v1alpha1
+kind: Revision
+metadata:
+  namespace: ske-release
+  labels:
+    serving.knative.dev/route: details-v1
+    serving.knative.dev/configuration: details-v1
+    serving.knative.dev/configurationGeneration: '1'
+    serving.knative.dev/service: details-v1
+    cloud.googleapis.com/location: us-central1
+spec:
+  container:
+    image: gcr.io/ske-release/bookinfo-details-v1:latest
+    resources:
+      limits:
+        memory: 256Mi
+  timeoutSeconds: 300
+  containerConcurrency: 80
+---
+apiVersion: split.smi-spec.io/v1alpha1
+kind: TrafficSplit
+metadata:
+  name: my-weights-0001
+spec:
+  # The root service that clients use to connect to the destination application.
+  service: numbers
+  # Services inside the namespace with their own selectors, endpoints and configuration.
+  backends:
+  - service: one
+    # Identical to resources, 1 = 1000m
+    weight: 10m
+  - service: two
+    weight: 100m
+  - service: three
+    weight: 1500m
+---
+apiVersion: split.smi-spec.io/v1alpha1
+kind: TrafficSplit
+metadata:
+  name: my-weights-0002
+spec:
+  # The root service that clients use to connect to the destination application.
+  service: numbers
+  # Services inside the namespace with their own selectors, endpoints and configuration.
+  backends:
+  - service: one
+    # Identical to resources, 1 = 1000m
+    weight: 10m
+  - service: two
+    weight: 100m
+  - service: three
+    weight: 1500m
