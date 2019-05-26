@@ -1,0 +1,21 @@
+apiVersion: serving.knative.dev/v1alpha1
+kind: Service
+metadata:
+  name: nginx
+  namespace: ske-release
+  labels:
+    cloud.googleapis.com/location: us-central1
+    meshrun.io/allow-unauthenticated: true
+    meshrun.io/async: false
+spec:
+  runLatest:
+    configuration:
+      revisionTemplate:
+        spec:
+          container:
+            image: gcr.io/ske-release/nginx:alpine
+            resources:
+              limits:
+                memory: 256Mi
+          containerConcurrency: 10
+          timeoutSeconds: 300

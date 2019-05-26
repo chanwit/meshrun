@@ -1,18 +1,15 @@
 apiVersion: serving.knative.dev/v1alpha1
-kind: Revision
+kind: Service
 metadata:
-  namespace: ske-release
-  labels:
-    serving.knative.dev/route: details-v1
-    serving.knative.dev/configuration: details-v1
-    serving.knative.dev/configurationGeneration: '1'
-    serving.knative.dev/service: details-v1
-    cloud.googleapis.com/location: us-central1
+  name: kn-helloworld
+  namespace: default
 spec:
-  container:
-    image: gcr.io/ske-release/bookinfo-details-v1:latest
-    resources:
-      limits:
-        memory: 256Mi
-  timeoutSeconds: 300
-  containerConcurrency: 80
+  runLatest:
+    configuration:
+      revisionTemplate:
+        spec:
+          container:
+            image: docker.io/ibmcom/kn-helloworld
+            env:
+            - name: TARGET
+              value: "Go Sample v1"
