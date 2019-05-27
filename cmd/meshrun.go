@@ -4,7 +4,6 @@ import (
 	"bufio"
 	"fmt"
 	"os"
-	"os/exec"
 
 	splitv1alpha1 "github.com/deislabs/smi-sdk-go/pkg/apis/split/v1alpha1"
 	servingv1alpha1 "github.com/knative/serving/pkg/apis/serving/v1alpha1"
@@ -14,66 +13,19 @@ import (
 	"sigs.k8s.io/yaml"
 
 	"github.com/urfave/cli"
+	"github.com/chanwit/meshrun/gcloud"
 )
 
 func Apply_serving_v1alpha1_Service(object servingv1alpha1.Service) {
 	// fmt.Println(">> Service v1alpha1")
 	// spew.Dump(object)
-	apply_v1alpha1_Service_To_Gcloud_Deploy(object)
+	gcloud.DeployV1alpha1Service(object)
 }
 
 func Delete_serving_v1alpha1_Service(object servingv1alpha1.Service) {
 	// fmt.Println(">> Service v1alpha1")
 	// spew.Dump(object)
-	delete_v1alpha1_Service_To_Gcloud_Deploy(object)
-}
-
-func apply_v1alpha1_Service_To_Gcloud_Deploy(svc servingv1alpha1.Service) {
-	spec := svc.Spec.DeprecatedRunLatest.Configuration.DeprecatedRevisionTemplate.Spec
-	container := spec.DeprecatedContainer
-
-	args := []string{"beta", "run", "deploy"}
-	args = append(args, svc.ObjectMeta.Name)
-	args = append(args, fmt.Sprintf("--namespace=%s", svc.ObjectMeta.Namespace))
-	args = append(args, fmt.Sprintf("--region=%s", svc.ObjectMeta.Labels["cloud.googleapis.com/location"]))
-	if v, exist := svc.ObjectMeta.Labels["meshrun.io/connectivity"]; exist {
-		args = append(args, fmt.Sprintf("--connectivity=%s", v))
-	}
-	if svc.ObjectMeta.Labels["meshrun.io/allow-unauthenticated"] == "true" {
-		args = append(args, "--allow-unauthenticated")
-	}
-	if svc.ObjectMeta.Labels["meshrun.io/async"] == "true" {
-		args = append(args, "--async")
-	}
-	args = append(args, fmt.Sprintf("--image=%s", container.Image))
-	if !container.Resources.Limits.Cpu().IsZero() {
-		args = append(args, fmt.Sprintf("--cpu=%s", container.Resources.Limits.Cpu().String()))
-	}
-	if !container.Resources.Limits.Memory().IsZero() {
-		args = append(args, fmt.Sprintf("--memory=%s", container.Resources.Limits.Memory().String()))
-	}
-	args = append(args, fmt.Sprintf("--concurrency=%d", spec.ContainerConcurrency))
-	if spec.TimeoutSeconds != nil {
-		args = append(args, fmt.Sprintf("--timeout=%d", *spec.TimeoutSeconds))
-	}
-
-	cmd := exec.Command("gcloud", args...)
-	cmd.Stdout = os.Stdout
-	cmd.Stderr = os.Stderr
-	cmd.Run()
-}
-
-func delete_v1alpha1_Service_To_Gcloud_Deploy(svc servingv1alpha1.Service) {
-	args := []string{"beta", "run", "services", "delete"}
-	args = append(args, svc.ObjectMeta.Name)
-	args = append(args, fmt.Sprintf("--namespace=%s", svc.ObjectMeta.Namespace))
-	args = append(args, fmt.Sprintf("--region=%s", svc.ObjectMeta.Labels["cloud.googleapis.com/location"]))
-	args = append(args, "--quiet")
-
-	cmd := exec.Command("gcloud", args...)
-	cmd.Stdout = os.Stdout
-	cmd.Stderr = os.Stderr
-	cmd.Run()
+	gcloud.DeleteV1alpha1Service(object)
 }
 
 func Delete_serving_v1beta1_Service(object servingv1beta1.Service) {
