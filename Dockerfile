@@ -8,7 +8,7 @@ RUN GO111MODULE=on CGO_ENABLED=0 \
 	go build -a -ldflags '-extldflags "-static"' \
 	-o app github.com/chanwit/meshrun/cmd
 
-FROM stratch
+FROM scratch
 
 COPY --from=0 /go/src/github.com/chanwit/meshrun/app /meshrun
 
