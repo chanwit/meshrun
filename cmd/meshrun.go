@@ -155,14 +155,12 @@ func doDelete(filename string) error {
 			break
 		}
 		if err != nil {
-			// fmt.Printf("err: %v\n", err)
 			return err
 		}
 
 		var typeMeta metav1.TypeMeta
 		err = yaml.Unmarshal(data, &typeMeta)
 		if err != nil {
-			// fmt.Printf("err: %v\n", err)
 			return err
 		}
 
@@ -172,7 +170,6 @@ func doDelete(filename string) error {
 			var svc servingv1alpha1.Service
 			err := yaml.Unmarshal(data, &svc)
 			if err != nil {
-				// fmt.Printf("err: %v\n", err)
 				return err
 			}
 			Delete_serving_v1alpha1_Service(svc)
@@ -181,7 +178,6 @@ func doDelete(filename string) error {
 			var svc servingv1beta1.Service
 			err := yaml.Unmarshal(data, &svc)
 			if err != nil {
-				// fmt.Printf("err: %v\n", err)
 				return err
 			}
 			Delete_serving_v1beta1_Service(svc)
@@ -205,14 +201,12 @@ func apply(filename string) error {
 			break
 		}
 		if err != nil {
-			// fmt.Printf("err: %v\n", err)
 			return err
 		}
 
 		var typeMeta metav1.TypeMeta
 		err = yaml.Unmarshal(data, &typeMeta)
 		if err != nil {
-			// fmt.Printf("err: %v\n", err)
 			return err
 		}
 
@@ -222,7 +216,6 @@ func apply(filename string) error {
 			var ts splitv1alpha1.TrafficSplit
 			err := yaml.Unmarshal(data, &ts)
 			if err != nil {
-				// fmt.Printf("err: %v\n", err)
 				return err
 			}
 			Apply_smi_v1alpha1_TrafficSplit(ts)
@@ -231,7 +224,6 @@ func apply(filename string) error {
 			var svc servingv1alpha1.Service
 			err := yaml.Unmarshal(data, &svc)
 			if err != nil {
-				// fmt.Printf("err: %v\n", err)
 				return err
 			}
 			Apply_serving_v1alpha1_Service(svc)
@@ -240,7 +232,6 @@ func apply(filename string) error {
 			var svc servingv1beta1.Service
 			err := yaml.Unmarshal(data, &svc)
 			if err != nil {
-				// fmt.Printf("err: %v\n", err)
 				return err
 			}
 			Apply_serving_v1beta1_Service(svc)
@@ -249,7 +240,6 @@ func apply(filename string) error {
 			var rev servingv1alpha1.Revision
 			err := yaml.Unmarshal(data, &rev)
 			if err != nil {
-				fmt.Printf("err: %v\n", err)
 				return err
 			}
 			Apply_serving_v1alpha1_Revision(rev)
@@ -258,7 +248,6 @@ func apply(filename string) error {
 			var rev servingv1beta1.Revision
 			err := yaml.Unmarshal(data, &rev)
 			if err != nil {
-				// fmt.Printf("err: %v\n", err)
 				return err
 			}
 			Apply_serving_v1beta1_Revision(rev)
