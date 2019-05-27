@@ -1,3 +1,3 @@
 # use Go 1.12.5
 
-go build -o meshrun github.com/chanwit/meshrun/cmd
+GO111MODULE=on go build -o meshrun github.com/chanwit/meshrun/cmd
