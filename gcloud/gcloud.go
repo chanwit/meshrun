@@ -1,9 +1,9 @@
 package gcloud
 
 import (
+	"fmt"
 	"os"
 	"os/exec"
-	"fmt"
 
 	servingv1alpha1 "github.com/knative/serving/pkg/apis/serving/v1alpha1"
 )

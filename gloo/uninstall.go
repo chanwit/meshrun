@@ -7,7 +7,7 @@ import (
 )
 
 func baseUninstall(yaml string) error {
-	cmd := exec.Command("kubectl","delete","-f","-")
+	cmd := exec.Command("kubectl", "delete", "-f", "-")
 	cmd.Stdin = strings.NewReader(yaml)
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr

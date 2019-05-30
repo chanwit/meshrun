@@ -88,18 +88,18 @@ func main() {
 			},
 		},
 		{
-			Name: "gloo",
+			Name:  "gloo",
 			Usage: "gloo install and uninstall",
-			Subcommands: []cli.Command {
+			Subcommands: []cli.Command{
 				{
-					Name: "install",
+					Name:  "install",
 					Usage: "install Gloo",
 					Action: func(c *cli.Context) error {
 						return gloo.Install()
 					},
 				},
 				{
-					Name: "uninstall",
+					Name:  "uninstall",
 					Usage: "uninstall Gloo",
 					Action: func(c *cli.Context) error {
 						return gloo.Uninstall()

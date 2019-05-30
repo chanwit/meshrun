@@ -122,7 +122,7 @@ spec:
   scope: Namespaced
   version: v1
 `
-var subGlooYaml_RBACInstall=`
+var subGlooYaml_RBACInstall = `
 ---
 kind: ClusterRole
 apiVersion: rbac.authorization.k8s.io/v1
@@ -164,7 +164,7 @@ roleRef:
   name: gloo-role-gateway
   apiGroup: rbac.authorization.k8s.io
 `
-var subGlooYaml_MainInstall=`
+var subGlooYaml_MainInstall = `
 ---
 apiVersion: v1
 kind: Service

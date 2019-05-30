@@ -7,7 +7,7 @@ import (
 )
 
 func baseInstall(yaml string) error {
-	cmd := exec.Command("kubectl","apply","-f","-")
+	cmd := exec.Command("kubectl", "apply", "-f", "-")
 	cmd.Stdin = strings.NewReader(yaml)
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
@@ -29,7 +29,6 @@ func roleInstall() error {
 func mainInstall() error {
 	return baseInstall(subGlooYaml_MainInstall)
 }
-
 
 func Install() error {
 	err := preInstall()
