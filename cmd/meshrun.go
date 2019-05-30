@@ -13,7 +13,9 @@ import (
 	"sigs.k8s.io/yaml"
 
 	"github.com/urfave/cli"
+
 	"github.com/chanwit/meshrun/gcloud"
+	"github.com/chanwit/meshrun/gloo"
 )
 
 func Apply_serving_v1alpha1_Service(object servingv1alpha1.Service) {
@@ -83,6 +85,19 @@ func main() {
 			Action: func(c *cli.Context) error {
 				filename := c.String("filename")
 				return doDelete(filename)
+			},
+		},
+		{
+			Name: "gloo",
+			Usage: "gloo install and uninstall",
+			Subcommands: []cli.Command {
+				{
+					Name: "install",
+					Usage: "install Gloo",
+					Action: func(c *cli.Context) error {
+						return gloo.Install()
+					},
+				},
 			},
 		},
 	}
