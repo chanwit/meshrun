@@ -98,6 +98,13 @@ func main() {
 						return gloo.Install()
 					},
 				},
+				{
+					Name: "uninstall",
+					Usage: "uninstall Gloo",
+					Action: func(c *cli.Context) error {
+						return gloo.Uninstall()
+					},
+				},
 			},
 		},
 	}
