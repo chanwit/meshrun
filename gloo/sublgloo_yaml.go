@@ -238,27 +238,27 @@ kind: Deployment
 metadata:
   labels:
     app: gloo
-    gloo: discovery
-  name: discovery
+    gloo: gateway
+  name: gateway
   namespace: gloo-system
 spec:
   replicas: 1
   selector:
     matchLabels:
-      gloo: discovery
+      gloo: gateway
   template:
     metadata:
       labels:
-        gloo: discovery
+        gloo: gateway
       annotations:
         prometheus.io/path: /metrics
         prometheus.io/port: "9091"
         prometheus.io/scrape: "true"
     spec:
       containers:
-      - image: "quay.io/solo-io/discovery:0.13.29"
+      - image: "quay.io/solo-io/gateway:0.13.29"
         imagePullPolicy: Always
-        name: discovery
+        name: gateway
         securityContext:
           readOnlyRootFilesystem: true
           allowPrivilegeEscalation: false
