@@ -16,6 +16,7 @@ import (
 
 	"github.com/chanwit/meshrun/gcloud"
 	"github.com/chanwit/meshrun/gloo"
+	"github.com/chanwit/meshrun/kubectl"
 )
 
 func Apply_serving_v1alpha1_Service(object servingv1alpha1.Service) {
@@ -155,6 +156,11 @@ func doDelete(filename string) error {
 				return err
 			}
 			Delete_serving_v1beta1_Service(svc)
+		case "gateway.solo.io/v1/VirtualService":
+			kubectl.Delete(string(data))
+		default:
+			fmt.Printf("Unsupported apiVersion: %s, kind: %s\n",
+				typeMeta.APIVersion, typeMeta.Kind)
 		}
 	}
 
@@ -225,6 +231,11 @@ func apply(filename string) error {
 				return err
 			}
 			Apply_serving_v1beta1_Revision(rev)
+		case "gateway.solo.io/v1/VirtualService":
+			kubectl.Apply(string(data))
+		default:
+			fmt.Printf("Unsupported apiVersion: %s, kind: %s\n",
+				typeMeta.APIVersion, typeMeta.Kind)
 		}
 	}
 
