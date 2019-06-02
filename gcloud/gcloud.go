@@ -40,6 +40,12 @@ func DeployV1alpha1Service(svc servingv1alpha1.Service) {
 		args = append(args, fmt.Sprintf("--timeout=%d", *spec.TimeoutSeconds))
 	}
 
+	env := []string{}
+	for _, e := range container.Env {
+		env = append(env, e.Name+"="+e.Value)
+	}
+	args = append(args, "--set-env-vars="+strings.Join(env, ","))
+
 	cmd := exec.Command("gcloud", args...)
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr

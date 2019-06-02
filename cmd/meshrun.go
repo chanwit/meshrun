@@ -16,6 +16,7 @@ import (
 
 	"github.com/chanwit/meshrun/gcloud"
 	"github.com/chanwit/meshrun/gloo"
+	"github.com/chanwit/meshrun/gloo/smi"
 	"github.com/chanwit/meshrun/kubectl"
 )
 
@@ -53,8 +54,9 @@ func Apply_serving_v1alpha1_Revision(object servingv1alpha1.Revision) {
 }
 
 func Apply_smi_v1alpha1_TrafficSplit(object splitv1alpha1.TrafficSplit) {
-	fmt.Println(">> TrafficSplit v1alpha1")
-	//spew.Dump(object)
+	vs := smi.ConvertTrafficSplitToVirtualService(object)
+	fmt.Println(vs)
+	kubectl.Apply(vs)
 }
 
 func main() {

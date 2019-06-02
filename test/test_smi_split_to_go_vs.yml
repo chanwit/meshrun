@@ -1,0 +1,15 @@
+---
+apiVersion: split.smi-spec.io/v1alpha1
+kind: TrafficSplit
+metadata:
+  name: nginx
+  namespace: meshrun
+  labels:
+    meshrun.io/domain-suffix: -ehua4gwvqq-uc.a.run.app
+spec:
+  service: nginx
+  backends:
+  - service: nginx-v1
+    weight: 5
+  - service: nginx-v2
+    weight: 5
