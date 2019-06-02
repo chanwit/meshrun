@@ -1,33 +1,23 @@
 package gloo
 
 import (
-	"os"
-	"os/exec"
-	"strings"
+	"github.com/chanwit/meshrun/kubectl"
 )
 
-func baseUninstall(yaml string) error {
-	cmd := exec.Command("kubectl", "delete", "-f", "-")
-	cmd.Stdin = strings.NewReader(yaml)
-	cmd.Stdout = os.Stdout
-	cmd.Stderr = os.Stderr
-	return cmd.Run()
-}
-
 func preUninstall() error {
-	return baseUninstall(subGlooYaml_PreInstall)
+	return kubectl.Delete(subGlooYaml_PreInstall)
 }
 
 func crdUninstall() error {
-	return baseUninstall(subGlooYaml_CRDInstall)
+	return kubectl.Delete(subGlooYaml_CRDInstall)
 }
 
 func roleUninstall() error {
-	return baseUninstall(subGlooYaml_RBACInstall)
+	return kubectl.Delete(subGlooYaml_RBACInstall)
 }
 
 func mainUninstall() error {
-	return baseUninstall(subGlooYaml_MainInstall)
+	return kubectl.Delete(subGlooYaml_MainInstall)
 }
 
 func Uninstall() error {

@@ -1,33 +1,23 @@
 package gloo
 
 import (
-	"os"
-	"os/exec"
-	"strings"
+	"github.com/chanwit/meshrun/kubectl"
 )
 
-func baseInstall(yaml string) error {
-	cmd := exec.Command("kubectl", "apply", "-f", "-")
-	cmd.Stdin = strings.NewReader(yaml)
-	cmd.Stdout = os.Stdout
-	cmd.Stderr = os.Stderr
-	return cmd.Run()
-}
-
 func preInstall() error {
-	return baseInstall(subGlooYaml_PreInstall)
+	return kubectl.Apply(subGlooYaml_PreInstall)
 }
 
 func crdInstall() error {
-	return baseInstall(subGlooYaml_CRDInstall)
+	return kubectl.Apply(subGlooYaml_CRDInstall)
 }
 
 func roleInstall() error {
-	return baseInstall(subGlooYaml_RBACInstall)
+	return kubectl.Apply(subGlooYaml_RBACInstall)
 }
 
 func mainInstall() error {
-	return baseInstall(subGlooYaml_MainInstall)
+	return kubectl.Apply(subGlooYaml_MainInstall)
 }
 
 func Install() error {
